@@ -81,6 +81,13 @@
 		19F27BE9171BD52A00FE0ACD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F27BE8171BD52A00FE0ACD /* MobileCoreServices.framework */; };
 		5EB4C930172D032200084B26 /* HubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB4C92F172D032200084B26 /* HubViewController.m */; };
 		5EB4C93A172D235A00084B26 /* HubPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB4C939172D235A00084B26 /* HubPageCell.m */; };
+		F835ABDF173CF7FF00AA5F29 /* MHBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABDE173CF7FF00AA5F29 /* MHBaseViewController.m */; };
+		F835ABE2173CF83900AA5F29 /* MHRESTServiceDelagator.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABE1173CF83900AA5F29 /* MHRESTServiceDelagator.m */; };
+		F835ABE7173CF84D00AA5F29 /* MHResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABE4173CF84D00AA5F29 /* MHResponse.m */; };
+		F835ABE8173CF84D00AA5F29 /* MHRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABE6173CF84D00AA5F29 /* MHRequest.m */; };
+		F835ABED173CF88800AA5F29 /* MHAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABE9173CF88800AA5F29 /* MHAccount.m */; };
+		F835ABEE173CF88800AA5F29 /* MHLoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABEC173CF88800AA5F29 /* MHLoginRequest.m */; };
+		F835ABF1173CF89300AA5F29 /* MHOrganization.m in Sources */ = {isa = PBXBuildFile; fileRef = F835ABF0173CF89300AA5F29 /* MHOrganization.m */; };
 		F8AEE8D9173CD7F3005C9D9E /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8AEE8D2173CD77A005C9D9E /* libRestKit.a */; };
 /* End PBXBuildFile section */
 
@@ -226,6 +233,20 @@
 		5EB4C92F172D032200084B26 /* HubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HubViewController.m; sourceTree = "<group>"; };
 		5EB4C938172D235900084B26 /* HubPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HubPageCell.h; sourceTree = "<group>"; };
 		5EB4C939172D235A00084B26 /* HubPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HubPageCell.m; sourceTree = "<group>"; };
+		F835ABDD173CF7FF00AA5F29 /* MHBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHBaseViewController.h; sourceTree = "<group>"; };
+		F835ABDE173CF7FF00AA5F29 /* MHBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHBaseViewController.m; sourceTree = "<group>"; };
+		F835ABE0173CF83300AA5F29 /* MHRESTServiceDelagator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRESTServiceDelagator.h; sourceTree = "<group>"; };
+		F835ABE1173CF83900AA5F29 /* MHRESTServiceDelagator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRESTServiceDelagator.m; sourceTree = "<group>"; };
+		F835ABE3173CF84D00AA5F29 /* MHResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHResponse.h; sourceTree = "<group>"; };
+		F835ABE4173CF84D00AA5F29 /* MHResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHResponse.m; sourceTree = "<group>"; };
+		F835ABE5173CF84D00AA5F29 /* MHRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHRequest.h; sourceTree = "<group>"; };
+		F835ABE6173CF84D00AA5F29 /* MHRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHRequest.m; sourceTree = "<group>"; };
+		F835ABE9173CF88800AA5F29 /* MHAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHAccount.m; sourceTree = "<group>"; };
+		F835ABEA173CF88800AA5F29 /* MHAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHAccount.h; sourceTree = "<group>"; };
+		F835ABEB173CF88800AA5F29 /* MHLoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHLoginRequest.h; sourceTree = "<group>"; };
+		F835ABEC173CF88800AA5F29 /* MHLoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHLoginRequest.m; sourceTree = "<group>"; };
+		F835ABEF173CF89300AA5F29 /* MHOrganization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHOrganization.h; sourceTree = "<group>"; };
+		F835ABF0173CF89300AA5F29 /* MHOrganization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHOrganization.m; sourceTree = "<group>"; };
 		F8AEE8CA173CD779005C9D9E /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -291,6 +312,8 @@
 		19EAA0721713EF6D00477E15 /* MemberHub */ = {
 			isa = PBXGroup;
 			children = (
+				F835ABDC173CF73800AA5F29 /* frm */,
+				F835ABD7173CF71200AA5F29 /* dataaccessobjects */,
 				192E7ED2171E818C0065C2D4 /* MemberHubApp.entitlements */,
 				19EAA07B1713EF6D00477E15 /* LoginAppDelegate.h */,
 				19EAA07C1713EF6D00477E15 /* LoginAppDelegate.m */,
@@ -399,6 +422,34 @@
 				19EAA07A1713EF6D00477E15 /* MemberHubApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F835ABD7173CF71200AA5F29 /* dataaccessobjects */ = {
+			isa = PBXGroup;
+			children = (
+				F835ABEF173CF89300AA5F29 /* MHOrganization.h */,
+				F835ABF0173CF89300AA5F29 /* MHOrganization.m */,
+				F835ABE9173CF88800AA5F29 /* MHAccount.m */,
+				F835ABEA173CF88800AA5F29 /* MHAccount.h */,
+				F835ABEB173CF88800AA5F29 /* MHLoginRequest.h */,
+				F835ABEC173CF88800AA5F29 /* MHLoginRequest.m */,
+			);
+			name = dataaccessobjects;
+			sourceTree = "<group>";
+		};
+		F835ABDC173CF73800AA5F29 /* frm */ = {
+			isa = PBXGroup;
+			children = (
+				F835ABE3173CF84D00AA5F29 /* MHResponse.h */,
+				F835ABE4173CF84D00AA5F29 /* MHResponse.m */,
+				F835ABE5173CF84D00AA5F29 /* MHRequest.h */,
+				F835ABE6173CF84D00AA5F29 /* MHRequest.m */,
+				F835ABE1173CF83900AA5F29 /* MHRESTServiceDelagator.m */,
+				F835ABE0173CF83300AA5F29 /* MHRESTServiceDelagator.h */,
+				F835ABDD173CF7FF00AA5F29 /* MHBaseViewController.h */,
+				F835ABDE173CF7FF00AA5F29 /* MHBaseViewController.m */,
+			);
+			name = frm;
 			sourceTree = "<group>";
 		};
 		F8AEE8CB173CD779005C9D9E /* Products */ = {
@@ -575,6 +626,13 @@
 				5EB4C93A172D235A00084B26 /* HubPageCell.m in Sources */,
 				19657D38172FA57D0028FC84 /* ProfileAddressCell.m in Sources */,
 				19127B52173CC3B100429166 /* ServerService.m in Sources */,
+				F835ABDF173CF7FF00AA5F29 /* MHBaseViewController.m in Sources */,
+				F835ABE2173CF83900AA5F29 /* MHRESTServiceDelagator.m in Sources */,
+				F835ABE7173CF84D00AA5F29 /* MHResponse.m in Sources */,
+				F835ABE8173CF84D00AA5F29 /* MHRequest.m in Sources */,
+				F835ABED173CF88800AA5F29 /* MHAccount.m in Sources */,
+				F835ABEE173CF88800AA5F29 /* MHLoginRequest.m in Sources */,
+				F835ABF1173CF89300AA5F29 /* MHOrganization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
