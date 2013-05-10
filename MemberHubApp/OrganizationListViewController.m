@@ -81,7 +81,17 @@
     self.logoImageOption.image = image2;
     
 
+    MHRequest* request = [MHRequest alloc];
+    request.requestKey = @"listOrg";
     
+    MHResponse* res = [super executeService:request];
+    
+    RKObjectRequestOperation* operation = [res rro];
+    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *op, RKMappingResult *mappingResult) {
+        NSLog(@"success..%@", [mappingResult array] );
+    } failure:nil];
+    
+    [operation start];
     
     
    /* UIButton *lButton = [UIButton buttonWithType:UIButtonTypeCustom];

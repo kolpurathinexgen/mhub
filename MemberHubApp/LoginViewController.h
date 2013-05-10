@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginCell.h"
+#import "MHBaseViewController.h"
 
-@interface LoginViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface LoginViewController : MHBaseViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *loginTable;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;

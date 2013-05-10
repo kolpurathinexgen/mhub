@@ -176,11 +176,28 @@
 
 - (IBAction)goAction:(id)sender
 {
-    /*[self.view endEditing:YES];
-    if([self isValid])
-    {*/
-        [self performSegueWithIdentifier:@"LoginToOption" sender:sender];
-    //}
+    
+    MHLoginRequest* req = [MHLoginRequest alloc];
+    NSDictionary *parameters = @{ @"email": @"ram.kolpurath@inexgengames.com", @"password": @"memberhub"};
+    req.requestKey = @"login";
+    req.requestParameters = parameters;
+    MHResponse* res = [super executeService:req];
+    
+    RKObjectRequestOperation* operation = [res rro];
+    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *op, RKMappingResult *mappingResult) {
+        NSLog(@"success..%@", [mappingResult array] );
+        if(mappingResult.count ==1){
+            
+            MHAccount* mhAccount = [[mappingResult array] objectAtIndex:0];
+            if(mhAccount != NULL){
+                MHRESTServiceDelagator* delegator = [MHRESTServiceDelagator sharedInstance];
+                delegator.token = [mhAccount token];
+                [self performSegueWithIdentifier:@"LoginToOption" sender:sender];
+            }
+        }
+    } failure:nil];
+    
+    [operation start];
 }
 
 
