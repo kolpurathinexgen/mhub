@@ -89,6 +89,7 @@
     RKObjectRequestOperation* operation = [res rro];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *op, RKMappingResult *mappingResult) {
         NSLog(@"success..%@", [mappingResult array] );
+        NSLog(@"test...");
     } failure:nil];
     
     [operation start];
