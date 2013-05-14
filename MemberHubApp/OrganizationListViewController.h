@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "OrganizationListCell.h"
 #import "Organization.h"
-#import "MHRequest.h"
-#import "MHResponse.h"
-#import "MHBaseViewController.h"
 
-@interface OrganizationListViewController : MHBaseViewController
+@interface OrganizationListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+{
+    NSArray * myOrganizations;
+}
 
 
 @property (strong, nonatomic) IBOutlet UITableView *orgListTable;

@@ -10,6 +10,8 @@
 
 @interface Organization : NSObject
 
+@property(nonatomic) int orgID;
+
 @property(nonatomic, retain) NSString * title;
 @property(nonatomic, retain) NSString * hubtitle;
 

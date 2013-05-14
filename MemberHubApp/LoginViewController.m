@@ -11,7 +11,10 @@
 #import "OrganizationListViewController.h"
 #import "LoginCell.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "LoginResponse.h"
+#import "Login.h"
+#import <RestKit/RestKit.h>
+#import "LoginAppDelegate.h"
 
 @interface LoginViewController ()
 
@@ -102,9 +105,7 @@
     
     int row = indexPath.row;
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    
+       
     if (row == 0)
     {
         cell.loginLabel.text = @"Email";
@@ -176,29 +177,80 @@
 
 - (IBAction)goAction:(id)sender
 {
-    
-    MHLoginRequest* req = [MHLoginRequest alloc];
-    NSDictionary *parameters = @{ @"email": @"ram.kolpurath@inexgengames.com", @"password": @"memberhub"};
-    req.requestKey = @"login";
-    req.requestParameters = parameters;
-    MHResponse* res = [super executeService:req];
-    
-    RKObjectRequestOperation* operation = [res rro];
-    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *op, RKMappingResult *mappingResult) {
-        NSLog(@"success..%@", [mappingResult array] );
-        if(mappingResult.count ==1){
-            
-            MHAccount* mhAccount = [[mappingResult array] objectAtIndex:0];
-            if(mhAccount != NULL){
-                MHRESTServiceDelagator* delegator = [MHRESTServiceDelagator sharedInstance];
-                delegator.token = [mhAccount token];
-                [self performSegueWithIdentifier:@"LoginToOption" sender:sender];
-            }
-        }
-    } failure:nil];
-    
-    [operation start];
+    [self.view endEditing:YES];
+    if([self isValid])
+    {
+        UITextField * loginTF = (UITextField * )[self.loginTable viewWithTag:100];
+        UITextField * passwordTF = (UITextField * )[self.loginTable viewWithTag:200];
+        NSString *  emailText = loginTF.text;
+        NSString * passwordText = passwordTF.text;
+        
+        Login * loginObject = [[Login alloc] init];
+        loginObject.username = emailText;
+        loginObject.password = passwordText;
+        [self loginAction:loginObject];
+        //[self performSegueWithIdentifier:@"LoginToOption" sender:sender];
+    }
 }
+
+-(void)loginAction:(Login *)loginObject
+{
+    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+
+    NSString * memberHubRUL = @"https://www.memberhub.com";
+    
+    NSURL* baseURL = [[NSURL alloc]initWithString:memberHubRUL];
+    
+    AFHTTPClient* client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    //we want to work with JSON-Data
+    [client setDefaultHeader:@"Accept" value:RKMIMETypeJSON];
+    
+    // Initialize RestKit
+    RKObjectManager *objectManager = [[RKObjectManager alloc] initWithHTTPClient:client];
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    
+    RKObjectMapping *requestMapping = [RKObjectMapping requestMapping];
+    [requestMapping addAttributeMappingsFromDictionary:@{ @"username" : @"email",
+     @"password" : @"password" }];
+    
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping  objectClass:[Login class]   rootKeyPath:@""];
+    
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[LoginResponse class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{
+     @"id" : @"loginID",
+     @"authentication_token" : @"loginToken"
+     }];
+    
+    
+    // Register our mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping   pathPattern:nil   keyPath:@""  statusCodes:[NSIndexSet indexSetWithIndex:201]];
+    
+    [objectManager addRequestDescriptor:requestDescriptor];
+    [objectManager addResponseDescriptor:responseDescriptor];
+    
+    [objectManager postObject:loginObject path:@"/api2/v1/login" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *result)
+     {
+         NSLog(@"We object mapped the response with the following result: %@", result);
+         LoginResponse * loginresponse = [result firstObject];
+         LoginAppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+         [appDelegate saveLoginDetailsToDisk :loginresponse ];
+
+         [self performSegueWithIdentifier:@"LoginToOption" sender:self];
+
+     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+         NSLog(@"Failure logging in");
+         UIAlertView *alertText = [[UIAlertView alloc] initWithTitle:@"Login Failed"  message:@"Please check your User Name and Password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         
+         [alertText show];
+
+         
+     }];
+    
+}
+
 
 
 

@@ -8,12 +8,39 @@
 
 #import "LoginAppDelegate.h"
 #import <RestKit/RestKit.h>
+#import "LoginResponse.h"
+
 
 @implementation LoginAppDelegate
+
+@synthesize loginID;
+@synthesize loginToken;
+
+-(void)readLoginDetailsFromDisk
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.loginID = [defaults objectForKey:@"LOGIN_ID"];
+    self.loginToken = [defaults objectForKey:@"LOGIN_TOKEN"];
+    
+}
+
+-(void)saveLoginDetailsToDisk :(LoginResponse *)resp
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:resp.loginToken forKey:@"LOGIN_TOKEN"];
+    [defaults setObject:resp.loginID forKey:@"LOGIN_ID"];
+    [defaults synchronize];
+    self.loginToken = resp.loginToken;
+    self.loginID = resp.loginID;
+}
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [self readLoginDetailsFromDisk];
+
     return YES;
 }
 							

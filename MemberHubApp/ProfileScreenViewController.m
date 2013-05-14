@@ -16,6 +16,7 @@
 #import "HubListViewController.h"
 #import "HubViewController.h"
 #import "AddressScreenViewController.h"
+#import "OrgMenuViewController.h"
 
 @interface ProfileScreenViewController ()
 
@@ -50,7 +51,11 @@ static int selectedPhoneRow = 0;
 
 -(IBAction)profilePageAction:(id)sender
 {
-    NSLog(@"ProfilePageAction called");
+    
+   //OrgMenuViewController *controller = [[OrgMenuViewController alloc] initWithNibName:@"OrgMenuViewController" bundle:[NSBundle mainBundle] ];
+    
+    //[self presentViewController:controller animated:YES];
+   NSLog(@"ProfilePageAction called");
     if(self.profileFrontView.frame.origin.x == 0)
     {
         [self.orgMenuTable reloadData];
@@ -63,10 +68,8 @@ static int selectedPhoneRow = 0;
     }
     
 
-
-    [self performSegueWithIdentifier:@"ProfileToOption" sender:self];
 }
-
+    
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
@@ -131,7 +134,7 @@ static int selectedPhoneRow = 0;
     [rButton setFrame:CGRectMake(0,0,40,30)];
     //[lButton setFrame:CGRectMake(,0,500,30)];
     [rButton setImage:[UIImage imageNamed:@"Org-Navigation.png"] forState:UIControlStateNormal];
-    [rButton addTarget:self action:@selector(hubPageAction:) forControlEvents:UIControlEventTouchUpInside];
+    [rButton addTarget:self action:@selector(profilePageAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rBarButton = [[UIBarButtonItem alloc] initWithCustomView:rButton];
     
        
@@ -614,7 +617,7 @@ static int selectedPhoneRow = 0;
     [UIView animateWithDuration:.3 delay:.3 options:UIViewAnimationOptionTransitionCurlUp
                      animations:^{
                          
-                         [self.profileFrontView setFrame:CGRectMake(270, 0, self.profileFrontView.frame.size.width, self.profileFrontView.frame.size.height)]; }
+                         [self.profileFrontView setFrame:CGRectMake(-270, 0, self.profileFrontView.frame.size.width, self.profileFrontView.frame.size.height)]; }
                      completion:^(BOOL finished){
                          NSLog(@"Done!");}];
                      

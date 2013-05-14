@@ -7,6 +7,7 @@
 //
 
 #import "HubMenuViewController.h"
+#import "HubMenuCell.h"
 
 @interface HubMenuViewController ()
 
@@ -91,11 +92,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    HubCell * cell = (HubCell *)[tableView dequeueReusableCellWithIdentifier:@"HubICell"];
+    HubMenuCell * cell = (HubMenuCell *)[tableView dequeueReusableCellWithIdentifier:@"HMCell"];
     
     if(cell == nil ) // !cell means that if cell is nil
     {
-        cell = [[HubCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HubICell"];
+        cell = [[HubMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HMCell"];
     }
     
     int row = indexPath.row;
@@ -103,91 +104,69 @@
     
     if (row == 0)
     {
-        cell.hubCellLabel.text = @"Home Page";
+        cell.hubMenuLabel.text = @"Home Page";
         
         UIImage *cellImage = [UIImage imageNamed:@"home_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = FALSE;
-        cell.hubCellButton.hidden = TRUE;
-        
-    }
+        cell.hubMenuImageView.image = cellImage;
+            }
     else if (row == 1)
     {
-        cell.hubCellLabel.text = @"Announcements";
+        cell.hubMenuLabel.text = @"Announcements";
         
         UIImage *cellImage = [UIImage imageNamed:@"announcements_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = TRUE;
-        cell.hubCellButton.hidden = FALSE;
-        
+        cell.hubMenuImageView.image = cellImage;
+               
 
     }
     else if(row == 2)
     {
-        cell.hubCellLabel.text = @"Calender";
+        cell.hubMenuLabel.text = @"Calender";
         
         UIImage *cellImage = [UIImage imageNamed:@"calendar_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = TRUE;
-        cell.hubCellButton.hidden = FALSE;
-    }
+        cell.hubMenuImageView.image = cellImage;
+           }
     else if(row == 3)
     {
-        cell.hubCellLabel.text = @"Discussions";
+        cell.hubMenuLabel.text = @"Discussions";
         
         UIImage *cellImage = [UIImage imageNamed:@"discussions_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = FALSE;
-        cell.hubCellButton.hidden = TRUE;
-
+        cell.hubMenuImageView.image = cellImage;
+       
         
     }
     else if(row == 4)
     {
-        cell.hubCellLabel.text = @"Files";
+        cell.hubMenuLabel.text = @"Files";
         
         UIImage *cellImage = [UIImage imageNamed:@"files_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = FALSE;
-        cell.hubCellButton.hidden = TRUE;
-
-        
+        cell.hubMenuImageView.image = cellImage;
+               
     }
     else if(row == 5)
     {
-        cell.hubCellLabel.text = @"Members";
+        cell.hubMenuLabel.text = @"Members";
         
         UIImage *cellImage = [UIImage imageNamed:@"members_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = FALSE;
-        cell.hubCellButton.hidden = TRUE;
-
-        
+        cell.hubMenuImageView.image = cellImage;
+               
     }
     else if(row == 6)
     {
-        cell.hubCellLabel.text = @"Photos";
+        cell.hubMenuLabel.text = @"Photos";
         
         UIImage *cellImage = [UIImage imageNamed:@"albums_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = FALSE;
-        cell.hubCellButton.hidden = TRUE;
-
-        
+        cell.hubMenuImageView.image = cellImage;
+               
     }
     else if(row == 7)
     {
-        cell.hubCellLabel.text = @"WhiteBoards";
+        cell.hubMenuLabel.text = @"WhiteBoards";
         
         UIImage *cellImage = [UIImage imageNamed:@"whiteboard_icon.png"];
-        cell.hubCellImage.image = cellImage;
-        cell.hubCellButton.enabled = TRUE;
-        cell.hubCellButton.hidden = FALSE;
-        
+        cell.hubMenuImageView.image = cellImage;
+               
     }
-    cell.hubCellButton.tag = row;
-    
-    return cell;
+       return cell;
     
 }
 

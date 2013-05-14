@@ -1,5 +1,5 @@
 //
-//  HubPageCell.h
+//  HubMenuCell.h
 //  MemberHubApp
 //
 //  Created by Mubend on 28/04/13.
@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HubPageCell : UITableViewCell
+@interface HubMenuCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *hubMenuImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *hubMenuLabel;

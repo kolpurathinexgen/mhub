@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HubCell.h"
+#import "HubMenuCell.h"
 
 @interface HubMenuViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 

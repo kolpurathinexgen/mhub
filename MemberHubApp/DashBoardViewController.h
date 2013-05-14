@@ -2,7 +2,7 @@
 //  DashBoardViewController.h
 //  MemberHubApp
 //
-//  Created by InexgenGames on 4/20/13.
+//  Created by InexgenGames on 4/10/13.
 //  Copyright (c) 2013 InexgenGames. All rights reserved.
 //
 
@@ -10,21 +10,15 @@
 #import "DashBoardCell.h"
 #import "Organization.h"
 
-@interface DashBoardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface DashBoardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic) BOOL tableExpand;
+@property (strong, nonatomic) IBOutlet UIImageView *dashBoardImage;
 
+@property (nonatomic, assign) Organization * currentOrganization;
+- (IBAction)switchAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *switchButton;
 
-
-@property (strong, nonatomic) IBOutlet UITableView *dashboardTable;
-
-@property (strong, nonatomic) IBOutlet UIImageView *dashboardImage;
-
-
-- (IBAction)dashBoardSlideAction:(id)sender;
-- (IBAction)dashBoardButtonAction:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UIButton *dashBoardButton;
-
+@property (strong, nonatomic) IBOutlet UIView *dashBoardView;
+@property (strong, nonatomic) IBOutlet UITableView *dashBoardTable;
 
 @end

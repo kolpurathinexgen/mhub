@@ -2,7 +2,7 @@
 //  DashBoardCell.h
 //  MemberHubApp
 //
-//  Created by InexgenGames on 4/20/13.
+//  Created by InexgenGames on 4/10/13.
 //  Copyright (c) 2013 InexgenGames. All rights reserved.
 //
 
@@ -10,12 +10,7 @@
 
 @interface DashBoardCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *dashboardCellIcon;
-
-@property (strong, nonatomic) IBOutlet UILabel *dashboardCellLabel;
-
-
-
-
+@property (strong, nonatomic) IBOutlet UIImageView *dashBoardImageView;
+@property (strong, nonatomic) IBOutlet UILabel *dashBoardLabel;
 
 @end

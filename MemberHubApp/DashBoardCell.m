@@ -1,14 +1,15 @@
 //
-//  DashBoardCell.m
+//  DashBoardCell.h
 //  MemberHubApp
 //
-//  Created by InexgenGames on 4/20/13.
+//  Created by InexgenGames on 4/10/13.
 //  Copyright (c) 2013 InexgenGames. All rights reserved.
 //
 
 #import "DashBoardCell.h"
 
 @implementation DashBoardCell
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

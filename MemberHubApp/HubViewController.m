@@ -7,7 +7,7 @@
 //
 
 #import "HubViewController.h"
-#import "HubPageCell.h"
+#import "HubMenuCell.h"
 #import "OrgMenuCell.h"
 
 @interface HubViewController ()
@@ -294,12 +294,12 @@
 {
       if(tableView == self.hubMenuTable)
       {
-            HubPageCell * cell = (HubPageCell *)[tableView dequeueReusableCellWithIdentifier:@"HPCell"];
+            HubMenuCell * cell = (HubMenuCell *)[tableView dequeueReusableCellWithIdentifier:@"HMCell"];
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
             if(cell == nil ) // !cell means that if cell is nil
             {
-                cell = [[HubPageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HPCell"];
+                cell = [[HubMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HMCell"];
                 UIView *bgColorView = [[UIView alloc] init];
                 [bgColorView setBackgroundColor:[UIColor colorWithRed:41.0/255 green:47.0/255 blue:61.0/255 alpha:1]];
                 [cell setSelectedBackgroundView:bgColorView];

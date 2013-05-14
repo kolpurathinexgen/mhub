@@ -8,9 +8,12 @@
 
 #import "OrganizationListViewController.h"
 #import "OrganizationListCell.h"
-#import "OptionViewController.h"
+#import "DashBoardViewController.h"
 #import "Organization.h"
 #import <QuartzCore/QuartzCore.h>
+#import "LoginAppDelegate.h"
+#import <RestKit/RestKit.h>
+
 
 
 @interface OrganizationListViewController ()
@@ -22,6 +25,55 @@
 @synthesize orgListTable;
 @synthesize orgImageView;
 
+
+
+
+- (void)loadOrganizations
+{
+    // Load the object model via RestKit
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    
+    
+    RKObjectMapping *responseMapping = [RKObjectMapping mappingForClass:[Organization class]];
+    [responseMapping addAttributeMappingsFromDictionary:@{
+     @"id" : @"orgID",
+     @"name" : @"title"
+     }];
+    
+    
+    // Register our mappings with the provider using a response descriptor
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:responseMapping   pathPattern:nil   keyPath:@""  statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+    [objectManager addResponseDescriptor:responseDescriptor];
+    
+    
+    LoginAppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+    NSString * orgPath = [NSString stringWithFormat:@"/api2/v1/orgs?token=%@", appDelegate.loginToken];
+    
+    [objectManager getObjectsAtPath:orgPath
+                         parameters:nil
+                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult)
+     {
+         NSArray* statuses = [mappingResult array];
+         NSLog(@"Loaded statuses: %@", statuses);
+         myOrganizations = statuses;
+         [self.orgListTable reloadData];
+     }
+                            failure:^(RKObjectRequestOperation *operation, NSError *error)
+     {
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                         message:@"Could not fetch the organizations list"delegate:nil
+                                               cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         [alert show];
+         NSLog(@"Organization server fetch error: %@", error);
+     }];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadOrganizations];
+}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,7 +103,7 @@
 {
     if([segue.identifier isEqualToString:@"OptionToOrganization"])
     {
-        OptionViewController *controller = (OptionViewController *)segue.destinationViewController;
+        DashBoardViewController *controller = (DashBoardViewController *)segue.destinationViewController;
         controller.currentOrganization = self.org;
     }
 }
@@ -81,18 +133,7 @@
     self.logoImageOption.image = image2;
     
 
-    MHRequest* request = [MHRequest alloc];
-    request.requestKey = @"listOrg";
     
-    MHResponse* res = [super executeService:request];
-    
-    RKObjectRequestOperation* operation = [res rro];
-    [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *op, RKMappingResult *mappingResult) {
-        NSLog(@"success..%@", [mappingResult array] );
-        NSLog(@"test...");
-    } failure:nil];
-    
-    [operation start];
     
     
    /* UIButton *lButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -141,7 +182,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if( myOrganizations != nil )
+        return [myOrganizations count];
+    else
+        return 0;
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
@@ -168,63 +212,21 @@
           
     int row = indexPath.row;
     
-      
-    if (row == 0)
-    {
-        cell.orgCellLabel.text = @"Wander years of Learning";
-               
-        
-        NSString * filepath = [[NSBundle mainBundle]  pathForResource:@"hub" ofType:@"png"];
-        UIImage * cellImage = [UIImage imageWithContentsOfFile:filepath];
+    Organization * org = [myOrganizations objectAtIndex:row];
+    cell.orgCellLabel.text = org.title;
+    NSString * filepath = [[NSBundle mainBundle]  pathForResource:@"hub" ofType:@"png"];
+    UIImage * cellImage = [UIImage imageWithContentsOfFile:filepath];
+    cell.orgCellImageView.image = cellImage;
+    cell.tag = 100 + row;
 
-        cell.orgCellImageView.image = cellImage;
-        
-        cell.orgCellLabel.tag = 100;
-        
-    }
-    else if (row == 1)
-    {
-        cell.orgCellLabel.text = @"Church of the Apostles";
-        
-        NSString * filepath = [[NSBundle mainBundle]  pathForResource:@"hub" ofType:@"png"];
-        UIImage * cellImage = [UIImage imageWithContentsOfFile:filepath];
-        cell.orgCellImageView.image = cellImage;
-        cell.orgCellLabel.tag = 100;
-    }
-    if(row == 2)
-    {
-        cell.orgCellLabel.text = @"YMCA of the Triangle";
-        NSString * filepath = [[NSBundle mainBundle]  pathForResource:@"hub" ofType:@"png"];
-        UIImage * cellImage = [UIImage imageWithContentsOfFile:filepath];
-        cell.orgCellImageView.image = cellImage;
-        cell.orgCellLabel.tag = 100;
-
-    }
-    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = indexPath.row;
-    Organization * tmp = [[Organization alloc] init];
+    Organization * tmp = [myOrganizations objectAtIndex:row];
     self.org = tmp;
-    if(row == 0)
-    {
-        self.org.title = @"Wander years of Learning";
- 
-    }
-    if(row == 1)
-    {
-       self.org.title = @"Church of the Apostles";
-        
-    }
-
-     else if(row == 2)
-    {
-        self.org.title = @"YMCA of the Triangle";        
-    }
-
     
     [self performSegueWithIdentifier:@"OptionToOrganization" sender:self];
 }

@@ -9,7 +9,7 @@
 #import "Organization.h"
 
 @implementation Organization
-@synthesize title,hubtitle;
+@synthesize orgID, title,hubtitle;
 
 
 

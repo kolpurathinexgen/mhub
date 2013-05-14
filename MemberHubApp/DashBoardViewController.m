@@ -1,19 +1,25 @@
 //
-//  DashBoardViewController.m
+// DashBoardViewController.m
 //  MemberHubApp
 //
-//  Created by InexgenGames on 4/20/13.
+//  Created by InexgenGames on 4/10/13.
 //  Copyright (c) 2013 InexgenGames. All rights reserved.
 //
 
 #import "DashBoardViewController.h"
-#import "HubMenuViewController.h"
+#import "DashBoardCell.h"
+#import "HubListViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "ProfileScreenViewController.h"
 
 @interface DashBoardViewController ()
 
 @end
 
 @implementation DashBoardViewController
+
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,243 +29,213 @@
     }
     return self;
 }
+-(IBAction)profilePageAction:(id)sender
+{
+    [self performSegueWithIdentifier:@"OptionsToProfile" sender:self];
+}
+-(IBAction)hubListPageAction:(id)sender
+{
+    
+    self.currentOrganization = nil;
+    [self performSegueWithIdentifier:@"OptionToLogin" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"OrganizationToHubList"])
+    {
+        HubListViewController *controller = ( HubListViewController *)segue.destinationViewController;
+        controller.currentOrg = self.currentOrganization;
+    }
+    else if([segue.identifier isEqualToString:@"OrganizationToProfile"])
+    {
+        ProfileScreenViewController *controller = ( ProfileScreenViewController *)segue.destinationViewController;
+        controller.currentOrganization = self.currentOrganization;
+ 
+            
+    }
+
+}
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-        
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    self.tableExpand = FALSE;
+    self.title = self.currentOrganization.title;
     
-    self.dashboardTable.separatorColor = [UIColor clearColor];
+
+    
+    self.dashBoardTable.layer.cornerRadius = 30;
+    self.dashBoardTable.scrollEnabled = NO;
+
+
+    self.navigationItem.hidesBackButton = YES;
+    
+        
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
+    UIImage *image1 = [UIImage imageNamed:@"1136BG.png"];
+    self.dashBoardImage.image = image1;
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.backBarButtonItem=nil;
+     /*UIButton *lButton = [UIButton buttonWithType:UIButtonTypeCustom];
+     [lButton setFrame:CGRectMake(0,0,40,30)];
+     [lButton setImage:[UIImage imageNamed:@"HubblySpokeButton.png"] forState:UIControlStateNormal];
+     [lButton addTarget:self action:@selector(homePageAction:) forControlEvents:UIControlEventTouchUpInside];
+     UIBarButtonItem *lBarButton = [[UIBarButtonItem alloc] initWithCustomView:lButton];
+     self.navigationItem.leftBarButtonItem = lBarButton;*/
+
+    
+    /*UIButton *lButton = [UIButton buttonWithType:UIButtonTypeCustom];
+     [lButton setFrame:CGRectMake(0,0,40,30)];
+     [lButton setImage:[UIImage imageNamed:@"images-12.jpeg"] forState:UIControlStateNormal];
+     [lButton setTitle:@"LogOut" forState:UIControlStateNormal];
+     [lButton addTarget:self action:@selector(hubListPageAction:) forControlEvents:UIControlEventTouchUpInside];
+    lButton.titleLabel.textColor = [UIColor whiteColor];
+     lButton.backgroundColor = [UIColor grayColor];
+    [lButton.layer setBorderColor: [[UIColor grayColor] CGColor]];
+
+     UIBarButtonItem *lBarButton = [[UIBarButtonItem alloc] initWithCustomView:lButton];
+     self.navigationItem.leftBarButtonItem = lBarButton;*/
+
+    
+       
+    //UIBarButtonItem* deleteItem = [[UIBarButtonItem alloc] initWithCustomView:lbutton];
+    
+    /*UIButton *rButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rButton setFrame:CGRectMake(0,0,40,40)];
+    [rButton setImage:[UIImage imageNamed:@"MemberOptions.png"] forState:UIControlStateNormal];
+    [rButton addTarget:self action:@selector(profilePageAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rBarButton = [[UIBarButtonItem alloc] initWithCustomView:rButton];
+    self.navigationItem.rightBarButtonItem = rBarButton;*/
+    
+        
+
+    
+ 
+    
+    
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidUnload
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setDashboardTable:nil];
-    [self setDashboardImage:nil];
-    [self setDashBoardButton:nil];
+    [self setSwitchButton:nil];
+    [self setDashBoardView:nil];
+    [self setDashBoardImage:nil];
+    [self setDashBoardTable:nil];
     [super viewDidUnload];
+    
+    
+    UITapGestureRecognizer* tapRecon = [[UITapGestureRecognizer alloc]
+                                        initWithTarget:self action:@selector(navigationBarDoubleTap:)];
+    tapRecon.numberOfTapsRequired = 2;
+
+    // Release any retained subviews of the main view.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(self.tableExpand)
-    {
-        return 1;
-        
-    }
-    else 
-        return 4;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-     if(section == 0)
-     {
-         return 1;
-     }
-     else if(section == 1)
-     {
-        return 4;
-     }
-     else if(section == 2)
-     {
-        return 2;
-     }
-     else
-        return 2;
-        
-
+    return 3;
 }
 
-- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
-    {
-        return nil;
-    }
-    else if(section == 1)
-    {
-        //if(self.currentOrganization == nil)
-        //{
-            return @"";
-        //}
-       // else
-            //return self.currentOrganization.title;
-    }
-    else if(section == 2)
-    {
-        return @"YOUR HUBS";
-    }
-    else
-        return @"";
+    return 0;
+}
 
+
+-(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    DashBoardCell * cell = (DashBoardCell *)[tableView dequeueReusableCellWithIdentifier:@"DBCell"];
+   DashBoardCell * cell = (DashBoardCell *)[tableView dequeueReusableCellWithIdentifier:@"DCell"];
     
     if(cell == nil ) // !cell means that if cell is nil
     {
-        cell = [[DashBoardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DBCell"];
+        cell = [[DashBoardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DCell"];
     }
     
     int row = indexPath.row;
-    int section = indexPath.section;
     
-    if(section == 0)
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (row == 0)
     {
-      cell.dashboardCellLabel.text = @"Matt Harell";
-      UIImage *cellImage = [UIImage imageNamed:@"images-5.jpeg"];
-    cell.dashboardCellIcon.image = cellImage;
+        cell.dashBoardLabel.text = @"Your Hubs";
         
-  
+        UIImage *cellImage = [UIImage imageNamed:@"hub.png"];
+        cell.dashBoardImageView.image = cellImage;
+               
     }
-    else if(section == 1)
+    else if (row == 1)
     {
-        if (row == 0)
-        {
-            cell.dashboardCellLabel.text = @"Dashboard";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"hub_icon.png"];
-            cell.dashboardCellIcon.image = cellImage;
-            
-        }
-        else if (row == 1)
-        {
-            cell.dashboardCellLabel.text= @"Main Calender";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"calendar_icon.png"];
-            cell.dashboardCellIcon.image = cellImage;
-        }
-        else if(row == 2)
-        {
-            cell.dashboardCellLabel.text = @"Directory";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"Images-5.jpeg"];
-            cell.dashboardCellIcon.image = cellImage;
-
-        }
-        else if(row == 3)
-        {
-            cell.dashboardCellLabel.text = @"Admin Console";
-            //cell.dashboardCellIcon.image = cellImage;
-
-        }
+        cell.dashBoardLabel.text = @"Your Profile";
         
-    
+        UIImage *cellImage = [UIImage imageNamed:@"members.png"];
+        cell.dashBoardImageView.image = cellImage;
     }
-    else if(section == 2)
+    else if(row == 2)
     {
-        if (row == 0)
-        {
-            cell.dashboardCellLabel.text = @"Hub A";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"hub_icon.png"];
-            cell.dashboardCellIcon.image = cellImage;
-
-            
-        }
-        else if (row == 1)
-        {
-            cell.dashboardCellLabel.text= @"Hub B";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"hub_icon.png"];
-            cell.dashboardCellIcon.image = cellImage;
-
-        }
+        cell.dashBoardLabel.text = @"Directory";
+        
+        UIImage *cellImage = [UIImage imageNamed:@"directory.png"];
+        cell.dashBoardImageView.image = cellImage;
     }
-    else if(section == 3)
+   /* else if(row == 3)
     {
-        if (row == 0)
-        {
-            cell.dashboardCellLabel.text = @"Switch Organizations";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"hub_icon.png"];
-            cell.dashboardCellIcon.image = cellImage;
-            
-        }
-        else if (row == 1)
-        {
-            cell.dashboardCellLabel.text= @"Logout";
-            
-            UIImage *cellImage = [UIImage imageNamed:@"user.png"];
-            cell.dashboardCellIcon.image = cellImage;
+        cell.optionListLabel.text = @"Admin Console";
+        
+        UIImage *cellImage = [UIImage imageNamed:@"Images-5.jpeg"];
+        cell.OptionListImageView.image = cellImage;
 
-        }
-    }
-    
+    }*/
+        
     return cell;
-    
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     int section = indexPath.section;
     int row = indexPath.row;
-    if(section == 0)
+          
+    if(row == 0)
     {
-     [self performSegueWithIdentifier:@"DashBoardToProfile" sender:self];
-    }
-    
-    if(section == 2)
-    {
-        if(row == 0)
-        {
-            [self performSegueWithIdentifier:@"DashboardToHub" sender:self];
- 
-        }
-        
-        if(row == 1)
-        {
-            [self performSegueWithIdentifier:@"DashboardToHub" sender:self];
-            
-        }
+        [self performSegueWithIdentifier:@"OrganizationToHubList" sender:self];
 
     }
-    if(section == 3)
+    if(row == 1)
     {
-        if(row == 1)
-            {
-                [self performSegueWithIdentifier:@"DashBoardToLogin" sender:self];
-                
-            }
-   
-        
-    }
-        
+        [self performSegueWithIdentifier:@"OrganizationToProfile" sender:self];
+
+     }
+    if(row == 2)
+    {
+            [self performSegueWithIdentifier:@"OrganizationToDirectory" sender:self];
+     }
+       
 }
 
 
-- (IBAction)dashBoardButtonAction:(id)sender
+- (IBAction)switchAction:(id)sender
 {
-    HubMenuViewController *vc2 = [[HubMenuViewController alloc] initWithNibName:@"HubViewController" bundle:nil];
-    [vc2 setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:vc2 animated:YES completion:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (IBAction)dashBoardSlideAction:(id)sender
-{
-    if(self.tableExpand)
-    {
-        self.tableExpand = FALSE;
-    }
-    else
-    {
-        self.tableExpand = TRUE;
-    }
-    [self.dashboardTable reloadData];
+    [self performSegueWithIdentifier:@"OrganizationToOption" sender:self];
 
-    
 }
+
 @end

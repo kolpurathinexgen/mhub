@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class LoginResponse;
+
 @interface LoginAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) UINavigationController * navControl;
+@property (strong, nonatomic) NSString * loginToken;
+
+@property (strong, nonatomic) NSString * loginID;
+
+-(void)saveLoginDetailsToDisk :(LoginResponse *)resp;
+
 
 @end

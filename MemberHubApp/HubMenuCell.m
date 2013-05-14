@@ -1,14 +1,14 @@
 //
-//  HubPageCell.m
+//  HubMenuCell.m
 //  MemberHubApp
 //
 //  Created by Mubend on 28/04/13.
 //  Copyright (c) 2013 InexgenGames. All rights reserved.
 //
 
-#import "HubPageCell.h"
+#import "HubMenuCell.h"
 
-@implementation HubPageCell
+@implementation HubMenuCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
